@@ -118,3 +118,14 @@ connectionRAII::connectionRAII(MYSQL **SQL, connection_pool *connPool){
 connectionRAII::~connectionRAII(){
     poolRAII->ReleaseConnection(conRAII);
 }
+
+// int main(){
+//     connection_pool *connPool = connection_pool::GetInstance();
+//     connPool->init("10.255.253.187", "root", "hyh621354", "WebServer", 3306, 8, 1);
+//     MYSQL *con = connPool->GetConnection();
+//     if(con != NULL){
+//         printf("Get Connection!\n");
+//     }
+//     connPool->ReleaseConnection(con);
+//     return 0;
+// }
