@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include "log.h"
 #include <pthread.h>
+#include <iostream>
 
 Log::Log(){
     m_count = 0;
@@ -123,7 +124,7 @@ void Log::write_log(int level, const char *format, ...){
         m_log_queue->push(log_str);
     } else {
         m_mutex.lock();
-        fputs(log_str.c_str(), m_fp);
+        int ret=fputs(log_str.c_str(), m_fp);
         m_mutex.unlock();
     }
 
