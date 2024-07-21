@@ -47,7 +47,19 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "format": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "iomanip": "cpp",
+        "ranges": "cpp",
+        "ratio": "cpp",
+        "span": "cpp",
+        "spanstream": "cpp",
+        "sstream": "cpp",
+        "stop_token": "cpp",
+        "syncstream": "cpp",
+        "regex": "cpp",
+        "fstream": "cpp"
     },
     "sqltools.connections": [
         {
