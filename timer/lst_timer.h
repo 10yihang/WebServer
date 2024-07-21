@@ -91,7 +91,7 @@ public:
 public:
     static int *u_pipefd;
     sort_timer_lst m_timer_lst;
-    static int u_upollfd;
+    static int u_epollfd;
     int m_TIMESLOT;
 };
 
