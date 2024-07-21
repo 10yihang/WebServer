@@ -48,5 +48,20 @@
         "typeinfo": "cpp",
         "format": "cpp",
         "list": "cpp"
-    }
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "10.255.253.187",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "wgh",
+            "database": "WebServer",
+            "username": "root"
+        }
+    ]
 }
