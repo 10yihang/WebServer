@@ -137,3 +137,12 @@ void Log::flush(void){
     fflush(m_fp);
     m_mutex.unlock();
 }
+
+// //test
+// int main(){
+//     Log *log = Log::get_instance();
+//     log->init("text.txt", 0, 2000, 800000, 800);
+//     for(int i=1;i<=100;i++)
+//         log->write_log(0, "test log %d", i, "213");
+//     return 0;
+// }
