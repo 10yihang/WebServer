@@ -21,18 +21,23 @@ int main(int argc, char *argv[])
 
     //日志
     server.log_write();
+    std::cerr<<"log success\n";
 
     //数据库
     server.sql_pool();
+    std::cerr<<"sql success\n";
 
     //线程池
     server.thread_pool();
+    std::cerr<<"threadpool success\n";
 
     //触发模式
     server.trig_mode();
+    std::cerr<<"mode success\n";
 
     //监听
     server.eventListen();
+    std::cerr<<"Listening\n";
 
     //运行
     server.eventLoop();

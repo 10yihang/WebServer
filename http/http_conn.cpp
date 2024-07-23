@@ -243,10 +243,12 @@ http_conn::HTTP_CODE http_conn::parse_request_line(char *text) {
         m_url = strchr(m_url, '/');
     }
 
+
     if (!m_url || m_url[0] != '/') return BAD_REQUEST;
     // 当url为/时显示判断界面
     if (strlen(m_url) == 1) strcat(m_url, "judge.html");
     m_check_state = CHECK_STATE_HEADER;
+
     return NO_REQUEST;
 }
 
@@ -270,7 +272,32 @@ http_conn::HTTP_CODE http_conn::parse_headers(char *text) {
         text += 5;
         text += strspn(text, " \t");
         m_host = text;
-    } else {
+    } else if (strncasecmp(text, "Accept: ", 7) == 0) {
+        text += 7;
+        text += strspn(text, " \t");
+        m_host = text;
+    } else if (strncasecmp(text, "Accept-Language: ", 16) == 0) {
+        text += 16;
+        text += strspn(text, " \t");
+        m_host = text;
+    } else if (strncasecmp(text, "Upgrade-Insecure-Requests: ", 26) == 0) {
+        text += 26;
+        text += strspn(text, " \t");
+        m_host = text;
+    } else if (strncasecmp(text, "Accept-Encoding: ", 16) == 0) {
+        text += 16;
+        text += strspn(text, " \t");
+        m_host = text;
+    } else if (strncasecmp(text, "Cache-Control: ", 14) == 0) {
+        text += 14;
+        text += strspn(text, " \t");
+        m_host = text;
+    } else if (strncasecmp(text, "User-Agent: ", 11) == 0) {
+        text += 11;
+        text += strspn(text, " \t");
+        m_host = text;
+    }
+    else {
         LOG_INFO("oop!unknown header: %s", text);
     }
     return NO_REQUEST;
@@ -303,6 +330,7 @@ http_conn::HTTP_CODE http_conn::process_read() {
         switch (m_check_state) {
             case CHECK_STATE_REQUESTLINE: {
                 ret = parse_request_line(text);
+                // std::cerr<<text<<'\n';
                 if(ret == BAD_REQUEST)  return BAD_REQUEST;
                 break;
             }
@@ -386,7 +414,7 @@ http_conn::HTTP_CODE http_conn::do_request(){
 
     if(*(p+1)=='0'){//进入注册界面
         char *m_url_real = (char *)malloc(sizeof(char) * 200);
-        strcpy(m_url_real, "register.html");
+        strcpy(m_url_real, "/register.html");
         strncpy(m_real_file +len, m_url_real, strlen(m_url_real));
 
         free(m_url_real);
@@ -547,6 +575,7 @@ bool http_conn::process_write(HTTP_CODE ret){
         }
         case FILE_REQUEST:{
             add_status_line(200, ok_200_title);
+
             if(m_file_stat.st_size != 0){
                 m_iv[0].iov_base = m_write_buf;
                 m_iv[0].iov_len = m_write_idx;
