@@ -56,7 +56,7 @@ public:
     connection_pool *m_connPool;
     std::string m_user;//数据库用户名
     std::string m_passWord;
-    std::string m_databaseNmae; //使用数据库名
+    std::string m_databaseName; //使用数据库名
     int m_sql_num;
 
     //线程池相关
