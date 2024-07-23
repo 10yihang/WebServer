@@ -276,6 +276,19 @@ http_conn::HTTP_CODE http_conn::parse_headers(char *text) {
     return NO_REQUEST;
 }
 
+//判断http请求是否被完整读入
+http_conn::HTTP_CODE http_conn::parse_content(char *text)
+{
+    if (m_read_idx >= (m_content_length + m_checked_idx))
+    {
+        text[m_content_length] = '\0';
+        //POST请求中最后为输入的用户名和密码
+        m_string = text;
+        return GET_REQUEST;
+    }
+    return NO_REQUEST;
+}
+
 // 判断http请求是否被完整读入
 http_conn::HTTP_CODE http_conn::process_read() {
     LINE_STATUS line_status = LINE_OK;
@@ -312,6 +325,8 @@ http_conn::HTTP_CODE http_conn::process_read() {
 
     return NO_REQUEST;
 }
+
+
 
 http_conn::HTTP_CODE http_conn::do_request(){
     strcpy(m_real_file, doc_root);

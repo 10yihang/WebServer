@@ -264,6 +264,51 @@ void WebServer::dealwithread(int sockfd) {
     }
 }
 
+void WebServer::dealwithwrite(int sockfd){
+     util_timer *timer = users_timer[sockfd].timer;
+    //reactor
+    if (1 == m_actormodel)
+    {
+        if (timer)
+        {
+            adjust_timer(timer);
+        }
+
+        m_pool->append(users + sockfd, 1);
+
+        while (true)
+        {
+            if (1 == users[sockfd].improv)
+            {
+                if (1 == users[sockfd].timer_flag)
+                {
+                    deal_timer(timer, sockfd);
+                    users[sockfd].timer_flag = 0;
+                }
+                users[sockfd].improv = 0;
+                break;
+            }
+        }
+    }
+    else
+    {
+        //proactor
+        if (users[sockfd].write())
+        {
+            LOG_INFO("send data to the client(%s)", inet_ntoa(users[sockfd].get_address()->sin_addr));
+
+            if (timer)
+            {
+                adjust_timer(timer);
+            }
+        }
+        else
+        {
+            deal_timer(timer, sockfd);
+        }
+    }
+}
+
 void WebServer::eventLoop() {
     bool timeout = false;
     bool stop_server = false;
