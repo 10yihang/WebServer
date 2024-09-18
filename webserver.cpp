@@ -335,9 +335,9 @@ void WebServer::eventLoop() {
                 bool flag = dealwithsignal(timeout, stop_server);
                 if (flag == false) LOG_ERROR("%s", "dealclientdata failure");
             } else if (events[i].events & EPOLLIN)
-                dealwithread(sockfd);
+                dealwithread(sockfd),std::cerr<<"dealwithread\n";
             else if (events[i].events & EPOLLOUT)
-                dealwithwrite(sockfd);
+                dealwithwrite(sockfd),std::cerr<<"dealwithwrite\n";
         }
 
         if (timeout) {
