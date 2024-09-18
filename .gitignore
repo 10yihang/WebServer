@@ -1,4 +1,5 @@
-.vscode/
+.vscode/*
 *ServerLog
 server
 server
+.vscode/settings.json
